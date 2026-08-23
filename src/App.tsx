@@ -1,3 +1,5 @@
+import "@/index";
+
 function App() {
   return (
     <main className="p-8">
