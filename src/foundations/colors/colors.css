@@ -1,0 +1,64 @@
+@import "./primitive-colors.css";
+
+@theme inline {
+  /** Primary */
+  --color-primary: var(--emerald-tech-700);
+  --color-primary-soft: var(--emerald-tech-200);
+  --color-primary-hover: var(--emerald-tech-900);
+  --color-primary-active: var(--emerald-tech-950);
+  --color-primary-contrast: var(--emerald-tech-50);
+
+  /** Secondary */
+  --color-secondary: var(--modern-finance-800);
+  --color-secondary-hover: var(--modern-finance-900);
+  --color-secondary-active: var(--modern-finance-950);
+  --color-secondary-soft: var(--modern-finance-100);
+  --color-secondary-contrast: var(--modern-finance-50);
+
+  /** Accent */
+  --color-accent: var(--golden-orange-700);
+  --color-accent-hover: var(--golden-orange-800);
+  --color-accent-active: var(--golden-orange-900);
+  --color-accent-soft: var(--golden-orange-200);
+  --color-accent-contrast: var(--golden-orange-50);
+
+  /** Success */
+  --color-success: var(--forest-800);
+  --color-success-hover: var(--forest-900);
+  --color-success-active: var(--forest-950);
+  --color-success-soft: var(--forest-200);
+  --color-success-contrast: var(--forest-50);
+
+  /** Warning */
+  --color-warning: var(--antique-bronze-700);
+  --color-warning-hover: var(--antique-bronze-900);
+  --color-warning-active: var(--antique-bronze-950);
+  --color-warning-soft: var(--antique-bronze-200);
+  --color-warning-contrast: var(--antique-bronze-50);
+
+  /** Error */
+  --color-error: var(--terracota-700);
+  --color-error-hover: var(--terracota-800);
+  --color-error-active: var(--terracota-950);
+  --color-error-soft: var(--terracota-200);
+  --color-error-contrast: var(--terracota-50);
+
+  /** Info */
+  --color-info: var(--slate-gray-700);
+  --color-info-hover: var(--slate-gray-800);
+  --color-info-active: var(--slate-gray-950);
+  --color-info-soft: var(--slate-gray-200);
+  --color-info-contrast: var(--slate-gray-50);
+
+  /** Background */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+
+  /** Text */
+  --color-text-primary: var(--emerald-tech-950);
+  --color-text-secondary: #6c8d88;
+  --color-text-inverse: #ffffff;
+
+  /** Border */
+  --color-border: #e7ece8;
+}
