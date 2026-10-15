@@ -1,0 +1,600 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Overview" />
+
+# Foundations
+
+Bacurim UI foundations define the shared visual language used across the library.
+Colors, typography, spacing, radius, shadows, and breakpoints work together to
+create consistent, readable, and responsive interfaces.
+
+Use this overview for usage guidance and open each Story to inspect its visual
+examples and token names.
+
+## Explore the foundations
+
+<table>
+  <thead>
+    <tr>
+      <th>Foundation</th>
+      <th>Purpose</th>
+      <th>Story</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Colors</td>
+      <td>Semantic roles for surfaces, content, actions, and feedback.</td>
+      <td><a href="?path=/story/foundations-colors--default">Colors</a></td>
+    </tr>
+    <tr>
+      <td>Typography</td>
+      <td>Font families, text styles, and content hierarchy.</td>
+      <td><a href="?path=/story/foundations-typography--default">Typography</a></td>
+    </tr>
+    <tr>
+      <td>Spacing</td>
+      <td>A shared scale for padding, margins, and layout gaps.</td>
+      <td><a href="?path=/story/foundations-spacing--default">Spacing</a></td>
+    </tr>
+    <tr>
+      <td>Radius</td>
+      <td>Consistent corner shapes for controls and containers.</td>
+      <td><a href="?path=/story/foundations-radius--default">Radius</a></td>
+    </tr>
+    <tr>
+      <td>Shadows</td>
+      <td>Elevation and visual separation between surfaces.</td>
+      <td><a href="?path=/story/foundations-shadows--default">Shadows</a></td>
+    </tr>
+    <tr>
+      <td>Breakpoints</td>
+      <td>Responsive layout thresholds.</td>
+      <td><a href="?path=/story/foundations-breakpoints--default">Breakpoints</a></td>
+    </tr>
+  </tbody>
+</table>
+
+## Token usage principles
+
+- Prefer semantic color tokens that describe a role, such as `primary`, `surface`,
+  or `text-primary`, over raw palette values or hard-coded colors.
+- Use the shared typography utilities and spacing, radius, and shadow scales.
+- Keep equivalent roles consistent across components. A primary action should
+  use the same semantic color family wherever it appears.
+- Pair action colors with their corresponding contrast tokens, and use the
+  dedicated hover and active tokens for interaction states.
+- Check contrast, keyboard focus, and readability in context. Token selection
+  alone does not guarantee an accessible component.
+- Introduce new tokens in the foundation when a reusable need emerges, rather
+  than repeating isolated values in components.
+
+The examples below use the utilities provided by the foundation styles and
+Tailwind CSS. They assume the application's existing foundation styles are loaded.
+Code blocks are usage examples, rather than live component previews.
+
+## Colors
+
+The color system separates primitive palette values from semantic roles.
+Primitive colors provide the underlying palette; semantic tokens express how
+those colors should be used in an interface.
+
+<table>
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>Example CSS token</th>
+      <th>Example utility</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primary</td>
+      <td><code>--color-primary</code></td>
+      <td><code>bg-primary</code></td>
+      <td>Main actions and brand emphasis.</td>
+    </tr>
+    <tr>
+      <td>Secondary</td>
+      <td><code>--color-secondary</code></td>
+      <td><code>bg-secondary</code></td>
+      <td>Secondary emphasis.</td>
+    </tr>
+    <tr>
+      <td>Accent</td>
+      <td><code>--color-accent</code></td>
+      <td><code>bg-accent</code></td>
+      <td>Selected highlights.</td>
+    </tr>
+    <tr>
+      <td>Feedback</td>
+      <td><code>--color-success</code>, <code>--color-warning</code>, <code>--color-error</code>, <code>--color-info</code></td>
+      <td><code>bg-success</code>, <code>bg-warning</code>, <code>bg-error</code>, <code>bg-info</code></td>
+      <td>Status and feedback.</td>
+    </tr>
+    <tr>
+      <td>Background</td>
+      <td><code>--color-background</code></td>
+      <td><code>bg-background</code></td>
+      <td>Page background.</td>
+    </tr>
+    <tr>
+      <td>Surface</td>
+      <td><code>--color-surface</code></td>
+      <td><code>bg-surface</code></td>
+      <td>Cards and content containers.</td>
+    </tr>
+    <tr>
+      <td>Primary text</td>
+      <td><code>--color-text-primary</code></td>
+      <td><code>text-text-primary</code></td>
+      <td>Main content.</td>
+    </tr>
+    <tr>
+      <td>Secondary text</td>
+      <td><code>--color-text-secondary</code></td>
+      <td><code>text-text-secondary</code></td>
+      <td>Supporting content.</td>
+    </tr>
+    <tr>
+      <td>Inverse text</td>
+      <td><code>--color-text-inverse</code></td>
+      <td><code>text-text-inverse</code></td>
+      <td>Text on suitable dark surfaces.</td>
+    </tr>
+    <tr>
+      <td>Border</td>
+      <td><code>--color-border</code></td>
+      <td><code>border-border</code></td>
+      <td>Subtle boundaries.</td>
+    </tr>
+  </tbody>
+</table>
+
+Primary, secondary, accent, and feedback families also expose `-soft`, `-hover`,
+`-active`, and `-contrast` variants. Choose the variant by its intended role.
+Do not communicate status through color alone; include a meaningful text label.
+
+```tsx
+export function PrimaryAction() {
+  return (
+    <button
+      type="button"
+      className="body-sm rounded-sm bg-primary px-4 py-2 text-primary-contrast hover:bg-primary-hover active:bg-primary-active focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    >
+      Save changes
+    </button>
+  );
+}
+```
+
+## Typography
+
+Poppins is the heading font (`--font-heading`), and Inter is the body font
+(`--font-body`). The text utilities combine family, size, weight, line height,
+and, where appropriate, letter spacing.
+
+<table>
+  <thead>
+    <tr>
+      <th>Utility</th>
+      <th>Size token</th>
+      <th>Size</th>
+      <th>Typical usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>display</code></td>
+      <td><code>--text-display</code></td>
+      <td><code>clamp(2.5rem, 5vw, 3.25rem)</code></td>
+      <td>Prominent display text.</td>
+    </tr>
+    <tr>
+      <td><code>heading-xl</code></td>
+      <td><code>--text-heading-xl</code></td>
+      <td><code>clamp(2rem, 4vw, 2.625rem)</code></td>
+      <td>Major page titles.</td>
+    </tr>
+    <tr>
+      <td><code>heading-lg</code></td>
+      <td><code>--text-heading-lg</code></td>
+      <td><code>2rem</code></td>
+      <td>Page headings.</td>
+    </tr>
+    <tr>
+      <td><code>heading-md</code></td>
+      <td><code>--text-heading-md</code></td>
+      <td><code>1.5rem</code></td>
+      <td>Section headings.</td>
+    </tr>
+    <tr>
+      <td><code>heading-sm</code></td>
+      <td><code>--text-heading-sm</code></td>
+      <td><code>1.25rem</code></td>
+      <td>Subsection and card headings.</td>
+    </tr>
+    <tr>
+      <td><code>body-lg</code></td>
+      <td><code>--text-body-lg</code></td>
+      <td><code>1.25rem</code></td>
+      <td>Larger body content.</td>
+    </tr>
+    <tr>
+      <td><code>body-md</code></td>
+      <td><code>--text-body-md</code></td>
+      <td><code>1rem</code></td>
+      <td>Default body content.</td>
+    </tr>
+    <tr>
+      <td><code>body-sm</code></td>
+      <td><code>--text-body-sm</code></td>
+      <td><code>0.875rem</code></td>
+      <td>Supporting content.</td>
+    </tr>
+    <tr>
+      <td><code>caption</code></td>
+      <td><code>--text-caption</code></td>
+      <td><code>0.75rem</code></td>
+      <td>Short metadata and captions.</td>
+    </tr>
+    <tr>
+      <td><code>text-lead</code></td>
+      <td><code>--text-lead</code></td>
+      <td><code>clamp(1.125rem, 1.5vw, 1.25rem)</code></td>
+      <td>Introductory copy.</td>
+    </tr>
+  </tbody>
+</table>
+
+Font weight tokens are `--font-weight-regular` (400),
+`--font-weight-medium` (500), `--font-weight-semibold` (600), and
+`--font-weight-bold` (700).
+
+Choose HTML heading levels according to document structure, independently of
+visual size. Use body styles for readable paragraphs and reserve caption text
+for brief supporting information.
+
+```tsx
+export function SectionIntroduction() {
+  return (
+    <header className="flex flex-col gap-3">
+      <h2 className="heading-md text-text-primary">Account overview</h2>
+      <p className="body-md text-text-secondary">
+        Review your account details and recent activity.
+      </p>
+    </header>
+  );
+}
+```
+
+## Spacing
+
+The spacing scale uses `--spacing: 0.25rem` as its base unit. Numeric spacing
+utilities multiply that unit: `p-4` applies `1rem` of padding, and `gap-6`
+creates a `1.5rem` gap.
+
+<table>
+  <thead>
+    <tr>
+      <th>Scale step</th>
+      <th>Value</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code>0.25rem</code></td>
+      <td><code>gap-1</code></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>0.5rem</code></td>
+      <td><code>gap-2</code></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>0.75rem</code></td>
+      <td><code>gap-3</code></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>1rem</code></td>
+      <td><code>p-4</code></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><code>1.5rem</code></td>
+      <td><code>p-6</code></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td><code>2rem</code></td>
+      <td><code>p-8</code></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td><code>2.5rem</code></td>
+      <td><code>gap-10</code></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td><code>3rem</code></td>
+      <td><code>py-12</code></td>
+    </tr>
+  </tbody>
+</table>
+
+Use smaller gaps for closely related content and larger gaps between sections.
+Prefer flex or grid `gap` utilities for sibling spacing, and use padding for
+the space inside a container. Avoid arbitrary spacing values when the shared
+scale meets the layout's needs.
+
+```tsx
+export function ContentGroup() {
+  return (
+    <div className="flex flex-col gap-4 p-6">
+      <h2 className="heading-sm text-text-primary">Preferences</h2>
+      <p className="body-md text-text-secondary">
+        Manage the settings that shape your experience.
+      </p>
+    </div>
+  );
+}
+```
+
+## Radius
+
+Use the radius scale to keep corner shapes consistent across components.
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Utility</th>
+      <th>Value</th>
+      <th>Suggested usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--radius-sm</code></td>
+      <td><code>rounded-sm</code></td>
+      <td><code>0.5rem</code></td>
+      <td>Buttons, inputs, and compact elements.</td>
+    </tr>
+    <tr>
+      <td><code>--radius-md</code></td>
+      <td><code>rounded-md</code></td>
+      <td><code>1rem</code></td>
+      <td>Cards and standard containers.</td>
+    </tr>
+    <tr>
+      <td><code>--radius-lg</code></td>
+      <td><code>rounded-lg</code></td>
+      <td><code>1.5rem</code></td>
+      <td>Larger panels and prominent containers.</td>
+    </tr>
+    <tr>
+      <td><code>--radius-full</code></td>
+      <td><code>rounded-full</code></td>
+      <td><code>999px</code></td>
+      <td>Pills and circular elements with equal dimensions.</td>
+    </tr>
+  </tbody>
+</table>
+
+These are Bacurim UI values; do not assume that the utility names use the
+framework's default radius values. Apply a consistent radius to elements with
+the same role.
+
+```tsx
+export function StatusPill() {
+  return (
+    <span className="caption inline-flex rounded-full bg-success-soft px-3 py-1 text-success">
+      Active
+    </span>
+  );
+}
+```
+
+## Shadows
+
+Shadows communicate elevation and help distinguish overlapping surfaces.
+Choose the lowest level that provides sufficient separation.
+
+<table>
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Token</th>
+      <th>Utility</th>
+      <th>Suggested usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>None</td>
+      <td>No custom token; removes the box shadow.</td>
+      <td><code>shadow-none</code></td>
+      <td>Flat surfaces and layouts separated by borders.</td>
+    </tr>
+    <tr>
+      <td>Small</td>
+      <td><code>--shadow-sm</code></td>
+      <td><code>shadow-sm</code></td>
+      <td>Subtle elevation for cards and controls.</td>
+    </tr>
+    <tr>
+      <td>Medium</td>
+      <td><code>--shadow-md</code></td>
+      <td><code>shadow-md</code></td>
+      <td>Floating panels and dropdown surfaces.</td>
+    </tr>
+    <tr>
+      <td>Large</td>
+      <td><code>--shadow-lg</code></td>
+      <td><code>shadow-lg</code></td>
+      <td>Prominent overlays and elevated containers.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Shadow layers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--shadow-sm</code></td>
+      <td><code>0 1px 3px rgb(28 44 53 / 8%), 0 1px 2px rgb(28 44 53 / 4%)</code></td>
+    </tr>
+    <tr>
+      <td><code>--shadow-md</code></td>
+      <td><code>0 4px 12px rgb(28 44 53 / 10%), 0 2px 4px rgb(28 44 53 / 5%)</code></td>
+    </tr>
+    <tr>
+      <td><code>--shadow-lg</code></td>
+      <td><code>0 12px 28px rgb(28 44 53 / 14%), 0 4px 8px rgb(28 44 53 / 6%)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+Use shadows purposefully. Elevation does not set stacking order or provide
+overlay behavior; those remain separate implementation concerns.
+
+```tsx
+export function ElevatedSurface() {
+  return (
+    <div className="rounded-md border border-border bg-surface p-6 shadow-sm">
+      <p className="body-md text-text-primary">A subtly elevated surface.</p>
+    </div>
+  );
+}
+```
+
+## Breakpoints
+
+Bacurim UI follows a mobile-first approach. Unprefixed utilities define the
+base layout for all viewport widths. Responsive prefixes apply at their
+minimum width and continue at larger widths unless another utility overrides
+the same property.
+
+<table>
+  <thead>
+    <tr>
+      <th>Breakpoint</th>
+      <th>Token</th>
+      <th>Prefix</th>
+      <th>Minimum width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Base</td>
+      <td>No breakpoint token</td>
+      <td>Unprefixed</td>
+      <td><code>0px</code></td>
+    </tr>
+    <tr>
+      <td>Small</td>
+      <td><code>--breakpoint-sm</code></td>
+      <td><code>sm:</code></td>
+      <td><code>40rem</code> (640px)</td>
+    </tr>
+    <tr>
+      <td>Medium</td>
+      <td><code>--breakpoint-md</code></td>
+      <td><code>md:</code></td>
+      <td><code>48rem</code> (768px)</td>
+    </tr>
+    <tr>
+      <td>Large</td>
+      <td><code>--breakpoint-lg</code></td>
+      <td><code>lg:</code></td>
+      <td><code>64rem</code> (1024px)</td>
+    </tr>
+    <tr>
+      <td>Extra large</td>
+      <td><code>--breakpoint-xl</code></td>
+      <td><code>xl:</code></td>
+      <td><code>80rem</code> (1280px)</td>
+    </tr>
+    <tr>
+      <td>2X large</td>
+      <td><code>--breakpoint-2xl</code></td>
+      <td><code>2xl:</code></td>
+      <td><code>96rem</code> (1536px)</td>
+    </tr>
+  </tbody>
+</table>
+
+Pixel equivalents assume the browser's default 16px initial font size.
+Choose layout changes based on available space and content needs. A `sm:`
+prefix means “at the small breakpoint and above,” rather than “mobile only.”
+Resize the Storybook viewport to inspect behavior between thresholds as well
+as at the documented widths.
+
+```tsx
+export function ResponsiveGrid() {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {['Overview', 'Activity', 'Settings'].map((label) => (
+        <div
+          key={label}
+          className="rounded-md border border-border bg-surface p-6"
+        >
+          <h2 className="heading-sm text-text-primary">{label}</h2>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Putting the foundations together
+
+This example combines semantic colors, typography, spacing, radius, elevation,
+and responsive layout in a single component. The action is supplied by its
+consumer; the example introduces no application-specific business behavior.
+
+```tsx
+type OverviewCardProps = {
+  onViewDetails: () => void;
+};
+
+export function OverviewCard({ onViewDetails }: OverviewCardProps) {
+  return (
+    <section
+      aria-labelledby="overview-card-title"
+      className="flex flex-col gap-6 rounded-md border border-border bg-surface p-4 shadow-sm md:flex-row md:items-center md:justify-between md:p-6"
+    >
+      <div className="flex flex-col gap-2">
+        <span className="caption text-primary">Overview</span>
+        <h2 id="overview-card-title" className="heading-md text-text-primary">
+          Your workspace at a glance
+        </h2>
+        <p className="body-md text-text-secondary">
+          Keep your information organized and easy to find.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={onViewDetails}
+        className="body-sm shrink-0 rounded-sm bg-primary px-4 py-3 text-primary-contrast hover:bg-primary-hover active:bg-primary-active focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        View details
+      </button>
+    </section>
+  );
+}
+```
+
+When rendering multiple copies, give each heading a unique ID and update its
+section's `aria-labelledby` accordingly.
