@@ -1,0 +1,15 @@
+@source inline("shadow-none shadow-sm shadow-md shadow-lg");
+
+@theme {
+  --shadow-sm:
+    0 1px 3px rgb(28 44 53 / 8%),
+    0 1px 2px rgb(28 44 53 / 4%);
+
+  --shadow-md:
+    0 4px 12px rgb(28 44 53 / 10%),
+    0 2px 4px rgb(28 44 53 / 5%);
+
+  --shadow-lg:
+    0 12px 28px rgb(28 44 53 / 14%),
+    0 4px 8px rgb(28 44 53 / 6%);
+}
