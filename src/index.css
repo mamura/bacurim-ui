@@ -5,6 +5,8 @@
 @import "@fontsource/poppins/700.css";
 
 @import "tailwindcss";
+@source './**/*.stories.tsx';
 
 @import "./foundations/colors/colors.css";
 @import "./foundations/typography/typography.css";
+@import "./foundations/spacing/spacing.css";
