@@ -7,6 +7,7 @@ import {
   Settings,
   UserRound,
   Wallet,
+  Menu
 } from 'lucide-react';
 
 import { AppShell } from './AppShell';
@@ -247,3 +248,79 @@ export const AdministrativeLayout: Story = {
     );
   },
 };
+
+
+export const ResponsiveNavigation: Story = {
+  args: {
+    children: null,
+  },
+  render: function ResponsiveNavigationStory() {
+    const [mobileNavigationOpen, setMobileNavigationOpen] =
+      useState(false);
+
+    const [collapsed, setCollapsed] = useState(false);
+    const [activeItemId, setActiveItemId] =
+      useState('overview');
+
+    const groups: SidebarGroup[] =
+      administrativeGroups.map((group) => ({
+        ...group,
+        items: group.items.map((item) => ({
+          ...item,
+          onClick: () => {
+            setActiveItemId(item.id);
+            setMobileNavigationOpen(false);
+          },
+        })),
+      }));
+
+    return (
+      <AppShell
+        mobileNavigationOpen={mobileNavigationOpen}
+        onMobileNavigationOpenChange={
+          setMobileNavigationOpen
+        }
+        header={
+          <Header
+            logo={
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  aria-label="Open navigation"
+                  aria-expanded={
+                    mobileNavigationOpen
+                  }
+                  onClick={() =>
+                    setMobileNavigationOpen(true)
+                  }
+                  className="flex size-10 items-center justify-center rounded-sm hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-white lg:hidden"
+                >
+                  <Menu
+                    size={22}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                <AdministrativeLogo />
+              </div>
+            }
+            actions={<AdministrativeActions />}
+          />
+        }
+        navigation={
+          <Sidebar
+            groups={groups}
+            activeItemId={activeItemId}
+            collapsed={collapsed}
+            onCollapsedChange={setCollapsed}
+          />
+        }
+      >
+        <AdministrativeContent
+          activeItemId={activeItemId}
+        />
+      </AppShell>
+    );
+  },
+};
+
