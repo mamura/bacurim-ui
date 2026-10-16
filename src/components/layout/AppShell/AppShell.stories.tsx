@@ -14,6 +14,7 @@ import { AppShell } from './AppShell';
 import { Header } from '../Header';
 import { Sidebar } from '../Sidebar';
 import type { SidebarGroup } from '../Sidebar';
+import { ContentLayout } from '../ContentLayout';
 
 const meta = {
   title: 'Components/Layout/AppShell',
@@ -319,6 +320,104 @@ export const ResponsiveNavigation: Story = {
         <AdministrativeContent
           activeItemId={activeItemId}
         />
+      </AppShell>
+    );
+  },
+};
+
+
+export const CompleteApplicationShell: Story = {
+  args: {
+    children: null,
+  },
+  render: function CompleteApplicationShellStory() {
+    const [collapsed, setCollapsed] = useState(false);
+    const [mobileNavigationOpen, setMobileNavigationOpen] =
+      useState(false);
+    const [activeItemId, setActiveItemId] = useState('overview');
+
+    const groups: SidebarGroup[] = administrativeGroups.map(
+      (group) => ({
+        ...group,
+        items: group.items.map((item) => ({
+          ...item,
+          onClick: () => {
+            setActiveItemId(item.id);
+            setMobileNavigationOpen(false);
+          },
+        })),
+      }),
+    );
+
+    const pageTitle =
+      activeItemId === 'settings' ? 'Settings' : 'Overview';
+
+    return (
+      <AppShell
+        mobileNavigationOpen={mobileNavigationOpen}
+        onMobileNavigationOpenChange={setMobileNavigationOpen}
+        header={
+          <Header
+            logo={
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  aria-label="Open navigation"
+                  aria-expanded={mobileNavigationOpen}
+                  onClick={() => setMobileNavigationOpen(true)}
+                  className="flex size-10 items-center justify-center rounded-sm hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-white lg:hidden"
+                >
+                  <Menu size={22} aria-hidden="true" />
+                </button>
+
+                <AdministrativeLogo />
+              </div>
+            }
+            actions={<AdministrativeActions />}
+          />
+        }
+        navigation={
+          <Sidebar
+            groups={groups}
+            activeItemId={activeItemId}
+            collapsed={collapsed}
+            onCollapsedChange={setCollapsed}
+          />
+        }
+      >
+        <ContentLayout width="wide">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+              <h1 className="heading-lg text-text-primary">
+                {pageTitle}
+              </h1>
+
+              <p className="body-md text-text-secondary">
+                Example application built with reusable layout
+                components.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {['Content A', 'Content B', 'Content C'].map(
+                (label) => (
+                  <section
+                    key={label}
+                    className="rounded-md border border-border bg-surface p-6 shadow-sm"
+                  >
+                    <h2 className="heading-sm text-text-primary">
+                      {label}
+                    </h2>
+
+                    <p className="body-sm mt-3 text-text-secondary">
+                      Example content without business logic.
+                    </p>
+                  </section>
+                ),
+              )}
+            </div>
+          </div>
+        </ContentLayout>
       </AppShell>
     );
   },

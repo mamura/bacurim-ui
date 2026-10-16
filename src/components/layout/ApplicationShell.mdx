@@ -1,0 +1,283 @@
+
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as AppShellStories from './AppShell/AppShell.stories';
+
+<Meta title="Components/Layout/Application Shell" />
+
+# Application Shell
+
+The Application Shell provides the structural foundation for applications built with Bacurim UI.
+
+It combines reusable layout components to organize navigation, application actions, and page content without introducing business logic or application-specific dependencies.
+
+## Overview
+
+The Application Shell consists of four complementary components:
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Responsibility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AppShell</td>
+      <td>Organizes the application header, sidebar, and main content region.</td>
+    </tr>
+    <tr>
+      <td>Header</td>
+      <td>Displays application identity, optional horizontal navigation, and actions.</td>
+    </tr>
+    <tr>
+      <td>Sidebar</td>
+      <td>Displays grouped navigation items and supports expanded and collapsed states.</td>
+    </tr>
+    <tr>
+      <td>ContentLayout</td>
+      <td>Controls content width, horizontal alignment, and responsive spacing.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Complete Application Shell
+
+The following example combines all four components into a reusable administrative layout.
+
+<Canvas of={AppShellStories.CompleteApplicationShell} />
+
+The demonstration supports:
+
+- Expanded and collapsed sidebar states.
+- Active navigation items.
+- Responsive navigation.
+- Temporary mobile navigation with a backdrop.
+- Configurable application actions.
+- Responsive content layout.
+
+## Architecture
+
+The recommended composition is:
+
+```text
+AppShell
+├── Header
+│   ├── Logo
+│   ├── Optional navigation
+│   └── Actions
+└── Main layout
+    ├── Sidebar
+    └── ContentLayout
+        └── Application content
+```
+
+The Header spans the full width of the application.
+
+The Sidebar is positioned below the Header, alongside the main content region.
+
+ContentLayout is rendered inside the main region managed by AppShell.
+
+## Responsive Behavior
+
+<table>
+  <thead>
+    <tr>
+      <th>Viewport</th>
+      <th>Navigation behavior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Below lg (1024px)</td>
+      <td>Sidebar is hidden by default and can be opened as a temporary navigation panel.</td>
+    </tr>
+    <tr>
+      <td>lg (1024px) and above</td>
+      <td>Sidebar is persistently visible and can be expanded or collapsed.</td>
+    </tr>
+  </tbody>
+</table>
+
+Mobile navigation state is controlled by the consuming application through the `mobileNavigationOpen` and `onMobileNavigationOpenChange` properties.
+
+The temporary navigation supports backdrop dismissal, Escape handling, keyboard focus management, and isolation of background content.
+
+## Component APIs
+
+### AppShell
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>header</td><td>ReactNode</td><td>Application header.</td></tr>
+    <tr><td>navigation</td><td>ReactNode</td><td>Sidebar navigation.</td></tr>
+    <tr><td>children</td><td>ReactNode</td><td>Main application content.</td></tr>
+    <tr><td>className</td><td>string</td><td>Additional container classes.</td></tr>
+    <tr><td>mobileNavigationOpen</td><td>boolean</td><td>Controlled mobile navigation state.</td></tr>
+    <tr><td>onMobileNavigationOpenChange</td><td>(open: boolean) =&gt; void</td><td>Requests a mobile navigation state change.</td></tr>
+  </tbody>
+</table>
+
+### Header
+
+<table>
+  <thead>
+    <tr><th>Property</th><th>Type</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>logo</td><td>ReactNode</td><td>Application identity.</td></tr>
+    <tr><td>navigation</td><td>ReactNode</td><td>Optional horizontal navigation.</td></tr>
+    <tr><td>actions</td><td>ReactNode</td><td>Application actions.</td></tr>
+    <tr><td>className</td><td>string</td><td>Additional styling classes.</td></tr>
+  </tbody>
+</table>
+
+### Sidebar
+
+<table>
+  <thead>
+    <tr><th>Property</th><th>Type</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>groups</td><td>SidebarGroup[]</td><td>Navigation groups and items.</td></tr>
+    <tr><td>activeItemId</td><td>string</td><td>Active navigation item.</td></tr>
+    <tr><td>collapsed</td><td>boolean</td><td>Controlled collapsed state.</td></tr>
+    <tr><td>onCollapsedChange</td><td>(collapsed: boolean) =&gt; void</td><td>Requests a collapsed state change.</td></tr>
+    <tr><td>header</td><td>ReactNode</td><td>Optional sidebar header.</td></tr>
+    <tr><td>footer</td><td>ReactNode</td><td>Optional sidebar footer.</td></tr>
+    <tr><td>className</td><td>string</td><td>Additional styling classes.</td></tr>
+  </tbody>
+</table>
+
+### ContentLayout
+
+<table>
+  <thead>
+    <tr><th>Property</th><th>Type</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>children</td><td>ReactNode</td><td>Page content.</td></tr>
+    <tr><td>width</td><td>'constrained' | 'wide' | 'fluid'</td><td>Maximum content width.</td></tr>
+    <tr><td>className</td><td>string</td><td>Additional styling classes.</td></tr>
+  </tbody>
+</table>
+
+## Content Width
+
+ContentLayout provides three width variations:
+
+<table>
+  <thead>
+    <tr><th>Variation</th><th>Maximum width</th><th>Typical use</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>constrained</td><td>1024px</td><td>Standard application pages.</td></tr>
+    <tr><td>wide</td><td>1280px</td><td>Dashboards and reports.</td></tr>
+    <tr><td>fluid</td><td>No maximum</td><td>Interfaces requiring the available width.</td></tr>
+  </tbody>
+</table>
+
+## Usage Example
+
+```tsx
+import { useState } from 'react';
+import {
+  AppShell,
+  Header,
+  Sidebar,
+  ContentLayout,
+} from 'bacurim-ui';
+
+function ExampleApplication() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeItemId, setActiveItemId] = useState('overview');
+
+  const groups = [
+    {
+      id: 'main',
+      label: 'Main',
+      items: [
+        {
+          id: 'overview',
+          label: 'Overview',
+          onClick: () => {
+            setActiveItemId('overview');
+            setMobileOpen(false);
+          },
+        },
+        {
+          id: 'settings',
+          label: 'Settings',
+          onClick: () => {
+            setActiveItemId('settings');
+            setMobileOpen(false);
+          },
+        },
+      ],
+    },
+  ];
+
+  return (
+    <AppShell
+      mobileNavigationOpen={mobileOpen}
+      onMobileNavigationOpenChange={setMobileOpen}
+      header={
+        <Header
+          logo={
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                className="lg:hidden"
+                aria-label="Open navigation"
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen(true)}
+              >
+                Menu
+              </button>
+              <span>Example App</span>
+            </div>
+          }
+          actions={<button type="button">Action</button>}
+        />
+      }
+      navigation={
+        <Sidebar
+          groups={groups}
+          activeItemId={activeItemId}
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+        />
+      }
+    >
+      <ContentLayout width="wide">
+        <h1>
+          {activeItemId === 'settings' ? 'Settings' : 'Overview'}
+        </h1>
+        <p>Example application content.</p>
+      </ContentLayout>
+    </AppShell>
+  );
+}
+```
+
+## Design Foundations
+
+Application Shell components use the shared Bacurim UI foundations for colors, typography, spacing, radius, shadows, and responsive breakpoints.
+
+Applications should compose these components using the existing tokens rather than introducing arbitrary layout values.
+
+## Scope and Responsibilities
+
+The Application Shell manages application structure and navigation presentation.
+
+It does not implement authentication, authorization, application routes, API integration, or business-specific content.
+
+These responsibilities belong to the consuming application.
