@@ -6,3 +6,6 @@ export type { SidebarItem, SidebarGroup, SidebarProps } from "./layout/Sidebar";
 
 export { Header } from "./layout/Header";
 export type { HeaderProps } from "./layout/Header";
+
+export { ContentLayout } from './layout/ContentLayout';
+export type { ContentLayoutProps, ContentLayoutWidth, } from './layout/ContentLayout';
