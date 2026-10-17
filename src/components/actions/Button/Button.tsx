@@ -4,6 +4,8 @@ import type {
   ReactNode,
 } from 'react';
 
+import { cn } from '@/utilities/cn';
+
 export type ButtonVariant =
   | 'solid'
   | 'outline'
@@ -216,7 +218,7 @@ export function Button({
 }: ButtonProps) {
   const isDisabled = disabled || loading;
 
-  const classes = [
+  const classes = cn(
     'relative inline-flex shrink-0 items-center justify-center',
     'font-medium whitespace-nowrap',
     'transition-colors duration-150',
@@ -225,11 +227,9 @@ export function Button({
     iconOnly ? iconSizeClasses[size] : sizeClasses[size],
     radiusClasses[radius],
     colorClasses[color][variant],
-    fullWidth ? 'w-full' : '',
+    fullWidth && 'w-full',
     className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  );
 
   return (
     <button

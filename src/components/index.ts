@@ -11,3 +11,4 @@ export { ContentLayout } from './layout/ContentLayout';
 export type { ContentLayoutProps, ContentLayoutWidth, } from './layout/ContentLayout';
 
 export * from './actions/Button';
+export * from './surfaces/Card';
