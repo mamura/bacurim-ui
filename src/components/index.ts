@@ -19,3 +19,4 @@ export * from './data-display/Tooltip';
 export * from './data-display/Avatar';
 export * from './layout/Separator';
 export * from './forms/Input';
+export * from './forms/Textarea';
