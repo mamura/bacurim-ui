@@ -13,3 +13,4 @@ export type { ContentLayoutProps, ContentLayoutWidth, } from './layout/ContentLa
 export * from './actions/Button';
 export * from './surfaces/Card';
 export * from './data-display/Badge';
+export * from './navigation/Tabs';
