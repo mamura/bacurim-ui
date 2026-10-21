@@ -17,3 +17,4 @@ export * from './navigation/Tabs';
 export * from './navigation/DropdownMenu';
 export * from './data-display/Tooltip';
 export * from './data-display/Avatar';
+export * from './layout/Separator';
