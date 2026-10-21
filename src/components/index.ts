@@ -15,3 +15,4 @@ export * from './surfaces/Card';
 export * from './data-display/Badge';
 export * from './navigation/Tabs';
 export * from './navigation/DropdownMenu';
+export * from './data-display/Tooltip';
