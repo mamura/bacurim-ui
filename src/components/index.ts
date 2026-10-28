@@ -24,3 +24,4 @@ export * from './forms/Select';
 export * from './forms/Checkbox';
 export * from './forms/RadioGroup';
 export * from './forms/FormField';
+export * from './forms/MoneyInput';
