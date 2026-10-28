@@ -22,3 +22,4 @@ export * from './forms/Input';
 export * from './forms/Textarea';
 export * from './forms/Select';
 export * from './forms/Checkbox';
+export * from './forms/RadioGroup';
