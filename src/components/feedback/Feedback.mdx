@@ -1,0 +1,283 @@
+
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+
+import * as AlertStories from './Alert/Alert.stories';
+import * as ToastStories from './Toast/Toast.stories';
+import * as SkeletonStories from './Skeleton/Skeleton.stories';
+import * as EmptyStateStories from './EmptyState/EmptyState.stories';
+import * as ProgressStories from './Progress/Progress.stories';
+
+<Meta title="Components/Feedback/Overview" />
+
+# Feedback
+
+Os componentes de feedback comunicam estados, resultados de operações e
+informações relevantes para o usuário.
+
+A biblioteca oferece componentes para notificações, mensagens contextuais,
+carregamento, ausência de conteúdo e acompanhamento de progresso.
+
+## Escolhendo o componente
+
+| Componente | Finalidade | Exemplo de uso |
+| --- | --- | --- |
+| Alert | Mensagens contextuais persistentes | Avisos, erros e orientações |
+| Toast | Notificações temporárias | Confirmação de uma operação |
+| Skeleton | Representação de conteúdo em carregamento | Cards, listas e tabelas |
+| Empty State | Ausência de conteúdo | Listas vazias e buscas sem resultados |
+| Progress | Acompanhamento de operações | Processamento e tarefas demoradas |
+
+---
+
+## Alert
+
+O `Alert` apresenta informações relevantes dentro do contexto da interface.
+
+Suporta as variantes semânticas `info`, `success`, `warning` e `danger`,
+além de título, descrição, ícone, ações e fechamento opcional.
+
+### Exemplo
+
+<Canvas of={AlertStories.Default} />
+
+### API
+
+| Componente | Responsabilidade |
+| --- | --- |
+| `Alert` | Container e variante semântica |
+| `AlertIcon` | Elemento visual |
+| `AlertContent` | Organização do conteúdo |
+| `AlertTitle` | Título da mensagem |
+| `AlertDescription` | Descrição |
+| `AlertActions` | Ações relacionadas |
+
+A propriedade `dismissible` permite exibir o controle de fechamento.
+O callback `onDismiss` notifica a aplicação, que permanece responsável
+por remover o alerta da interface.
+
+### Acessibilidade
+
+- Alertas informativos utilizam `role="status"`.
+- Alertas de perigo utilizam `role="alert"`.
+- As ações devem possuir nomes acessíveis.
+- Mensagens críticas não devem depender exclusivamente de cor.
+
+---
+
+## Toast
+
+O `Toast` apresenta notificações temporárias que não precisam interromper
+o fluxo principal da aplicação.
+
+Suporta variantes semânticas, aparências `default`, `soft` e `solid`,
+ações, progresso, estado de carregamento e diferentes posições na tela.
+
+### Exemplo
+
+<Canvas of={ToastStories.Default} />
+
+### API
+
+O sistema utiliza `ToastProvider` e o hook `useToast()`.
+
+```tsx
+<ToastProvider position="bottom-right">
+  <App />
+</ToastProvider>
+```
+
+```tsx
+const toast = useToast();
+
+toast.success({
+  title: 'Alterações salvas',
+  description: 'Os dados foram atualizados.',
+  duration: 5000,
+});
+```
+
+Métodos disponíveis:
+
+| Método | Finalidade |
+| --- | --- |
+| `show()` | Exibir uma notificação |
+| `info()` | Exibir informação |
+| `success()` | Exibir sucesso |
+| `warning()` | Exibir aviso |
+| `danger()` | Exibir erro |
+| `loading()` | Exibir carregamento |
+| `update()` | Atualizar uma notificação |
+| `dismiss()` | Fechar uma notificação |
+| `dismissAll()` | Fechar todas as notificações |
+
+### Comportamento
+
+- Notificações podem desaparecer automaticamente.
+- A duração pode ser configurada.
+- O fechamento automático pode ser pausado durante interação.
+- Notificações podem ser atualizadas programaticamente.
+- O Provider controla o empilhamento.
+
+### Acessibilidade
+
+As notificações não devem roubar o foco do usuário.
+Ações interativas precisam ser acessíveis por teclado e possuir
+identificação textual adequada.
+
+---
+
+## Skeleton
+
+O `Skeleton` representa visualmente o espaço de um conteúdo ainda
+não carregado, reduzindo mudanças bruscas de layout.
+
+### Exemplo de composição
+
+<Canvas of={SkeletonStories.UserCard} />
+
+### API
+
+| Propriedade | Valores |
+| --- | --- |
+| `variant` | `text`, `rectangle`, `rounded`, `circle` |
+| `animation` | `pulse`, `wave`, `none` |
+| `width` | Número ou dimensão CSS |
+| `height` | Número ou dimensão CSS |
+| `className` | Classes adicionais |
+
+### Exemplo
+
+```tsx
+<div>
+  <Skeleton variant="circle" width={48} height={48} />
+  <Skeleton variant="text" width="75%" height={16} />
+  <Skeleton variant="text" width="50%" height={12} />
+</div>
+```
+
+### Acessibilidade
+
+O Skeleton é decorativo e utiliza `aria-hidden="true"`.
+
+A aplicação consumidora deve comunicar o carregamento quando necessário.
+As animações respeitam `prefers-reduced-motion`.
+
+---
+
+## Empty State
+
+O `EmptyState` comunica a ausência de conteúdo e pode orientar o usuário
+sobre uma próxima ação.
+
+### Exemplo
+
+<Canvas of={EmptyStateStories.Default} />
+
+### API
+
+| Componente | Responsabilidade |
+| --- | --- |
+| `EmptyState` | Container e tamanho (`sm`, `md`, `lg`) |
+| `EmptyStateIcon` | Ícone ou elemento visual |
+| `EmptyStateTitle` | Título |
+| `EmptyStateDescription` | Descrição |
+| `EmptyStateActions` | Ações opcionais |
+
+### Exemplo de composição
+
+```tsx
+<EmptyState>
+  <EmptyStateIcon>
+    <Inbox />
+  </EmptyStateIcon>
+
+  <EmptyStateTitle>
+    Nenhum registro encontrado
+  </EmptyStateTitle>
+
+  <EmptyStateDescription>
+    Adicione um registro para começar.
+  </EmptyStateDescription>
+
+  <EmptyStateActions>
+    <Button>Adicionar registro</Button>
+  </EmptyStateActions>
+</EmptyState>
+```
+
+O conteúdo é definido pela aplicação. A biblioteca não possui
+mensagens ou comportamentos específicos de negócio.
+
+### Acessibilidade
+
+O ícone é decorativo. Título, descrição e ações permanecem disponíveis
+para tecnologias assistivas.
+
+---
+
+## Progress
+
+O `Progress` representa o andamento de uma operação por meio de
+uma barra linear.
+
+Pode funcionar em modo determinado, quando o valor é conhecido,
+ou indeterminado, quando a duração é desconhecida.
+
+### Exemplo
+
+<Canvas of={ProgressStories.Default} />
+
+### Progresso indeterminado
+
+<Canvas of={ProgressStories.Indeterminate} />
+
+### API
+
+| Propriedade | Valores |
+| --- | --- |
+| `value` | Valor atual |
+| `min` | Valor mínimo |
+| `max` | Valor máximo |
+| `indeterminate` | `boolean` |
+| `color` | `primary`, `secondary`, `success`, `warning`, `error`, `info` |
+| `size` | `sm`, `md`, `lg` |
+| `radius` | `none`, `sm`, `md`, `full` |
+| `label` | Texto opcional |
+| `showValue` | `boolean` |
+| `labelPosition` | `top`, `end`, `inside`, `floating` |
+| `valueFormat` | `percentage`, `value` |
+
+### Exemplo
+
+```tsx
+<Progress
+  value={75}
+  label="Processando informações"
+  showValue
+  labelPosition="top"
+/>
+```
+
+### Acessibilidade
+
+O componente utiliza `role="progressbar"` e atributos ARIA para
+comunicar o progresso.
+
+No modo indeterminado, `aria-valuenow` é omitido.
+
+As animações e transições respeitam `prefers-reduced-motion`.
+
+---
+
+## Boas práticas
+
+- Utilize `Alert` para mensagens que precisam permanecer visíveis.
+- Utilize `Toast` para notificações temporárias.
+- Utilize `Skeleton` quando a estrutura do conteúdo esperado é conhecida.
+- Utilize `EmptyState` quando não há conteúdo a apresentar.
+- Utilize `Progress` quando o andamento de uma operação precisa ser comunicado.
+- Não dependa exclusivamente de cores para transmitir estados.
+- Evite utilizar múltiplos mecanismos de feedback para comunicar o mesmo evento.
+
+As páginas individuais de cada componente apresentam outras variantes,
+estados e possibilidades de composição.

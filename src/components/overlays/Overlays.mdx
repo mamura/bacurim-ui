@@ -1,0 +1,236 @@
+
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+
+import * as DialogStories from './Dialog/Dialog.stories';
+import * as DrawerStories from './Drawer/Drawer.stories';
+
+<Meta title="Components/Overlays/Overview" />
+
+# Overlays
+
+Os componentes de overlay apresentam conteúdo sobre a interface atual,
+permitindo realizar ações ou consultar informações sem navegar para
+outra página.
+
+O Bacurim UI disponibiliza dois componentes principais:
+
+- **Dialog:** janela modal centralizada.
+- **Drawer:** painel temporário que surge a partir de uma borda da tela.
+
+Ambos utilizam Radix Dialog como base para gerenciamento de foco,
+interações por teclado e acessibilidade.
+
+---
+
+## Escolhendo o componente
+
+| Componente | Quando utilizar |
+| --- | --- |
+| Dialog | Confirmações, formulários curtos e decisões que exigem atenção |
+| Drawer | Painéis de detalhes, filtros e formulários que precisam de mais espaço |
+
+Evite apresentar um overlay quando a informação pode ser exibida
+diretamente na interface sem prejudicar a experiência.
+
+---
+
+## Dialog
+
+O `Dialog` apresenta uma janela modal centralizada sobre o conteúdo
+da aplicação.
+
+Suporta diferentes tamanhos, título, descrição, corpo, rodapé
+e ações de fechamento.
+
+### Exemplo
+
+<Canvas of={DialogStories.Default} />
+
+### Composição
+
+```tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Abrir diálogo</Button>
+  </DialogTrigger>
+
+  <DialogContent size="md">
+    <DialogHeader>
+      <DialogTitle>Editar informações</DialogTitle>
+
+      <DialogDescription>
+        Atualize os dados necessários.
+      </DialogDescription>
+    </DialogHeader>
+
+    <DialogBody>
+      Conteúdo do formulário
+    </DialogBody>
+
+    <DialogFooter>
+      <DialogClose asChild>
+        <Button variant="outline">Cancelar</Button>
+      </DialogClose>
+
+      <Button>Salvar</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+### API pública
+
+| Componente | Responsabilidade |
+| --- | --- |
+| `Dialog` | Estado e contexto do diálogo |
+| `DialogTrigger` | Elemento que abre o diálogo |
+| `DialogContent` | Conteúdo modal |
+| `DialogHeader` | Cabeçalho |
+| `DialogTitle` | Título acessível |
+| `DialogDescription` | Descrição |
+| `DialogBody` | Conteúdo principal |
+| `DialogFooter` | Área de ações |
+| `DialogClose` | Controle de fechamento |
+| `DialogOverlay` | Camada de fundo |
+
+### Propriedades do DialogContent
+
+| Propriedade | Valores |
+| --- | --- |
+| `size` | `sm`, `md`, `lg`, `xl` |
+| `showCloseButton` | `boolean` |
+| `closeOnOverlayClick` | `boolean` |
+| `closeOnEscape` | `boolean` |
+
+O componente também permite controle externo de abertura por meio
+das propriedades do Radix Dialog.
+
+### Comportamento e acessibilidade
+
+- O foco é gerenciado quando o diálogo é aberto.
+- A navegação por Tab permanece dentro do diálogo modal.
+- O foco retorna ao elemento de origem quando o diálogo é fechado,
+  conforme o comportamento padrão do Radix.
+- A tecla Escape fecha o diálogo quando permitido.
+- O clique no overlay pode ser configurado.
+- Título e descrição fornecem contexto para tecnologias assistivas.
+
+Evite remover o título acessível. Quando um título visual não for
+necessário, ele pode ser ocultado visualmente sem ser removido
+da árvore de acessibilidade.
+
+---
+
+## Drawer
+
+O `Drawer` apresenta um painel temporário que entra na interface
+a partir de uma de suas bordas.
+
+É útil para detalhes, filtros, formulários e outras interações que
+precisam preservar o contexto da página atual.
+
+### Exemplo
+
+<Canvas of={DrawerStories.Default} />
+
+### Posicionamentos
+
+<Canvas of={DrawerStories.Positions} />
+
+### Composição
+
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Abrir painel</Button>
+  </DrawerTrigger>
+
+  <DrawerContent side="right" size="md">
+    <DrawerHeader>
+      <DrawerTitle>Detalhes</DrawerTitle>
+
+      <DrawerDescription>
+        Consulte as informações disponíveis.
+      </DrawerDescription>
+    </DrawerHeader>
+
+    <DrawerBody>
+      Conteúdo do painel
+    </DrawerBody>
+
+    <DrawerFooter>
+      <DrawerClose asChild>
+        <Button variant="outline">Fechar</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+```
+
+### API pública
+
+| Componente | Responsabilidade |
+| --- | --- |
+| `Drawer` | Estado e contexto do painel |
+| `DrawerTrigger` | Elemento que abre o painel |
+| `DrawerContent` | Conteúdo do painel |
+| `DrawerHeader` | Cabeçalho |
+| `DrawerTitle` | Título acessível |
+| `DrawerDescription` | Descrição |
+| `DrawerBody` | Área principal com rolagem |
+| `DrawerFooter` | Área de ações |
+| `DrawerClose` | Controle de fechamento |
+| `DrawerOverlay` | Camada de fundo |
+
+### Propriedades do DrawerContent
+
+| Propriedade | Valores |
+| --- | --- |
+| `side` | `left`, `right`, `top`, `bottom` |
+| `size` | `sm`, `md`, `lg`, `xl` |
+| `showCloseButton` | `boolean` |
+| `closeOnOverlayClick` | `boolean` |
+| `closeOnEscape` | `boolean` |
+
+### Comportamento e acessibilidade
+
+- O Drawer é modal por padrão.
+- O foco é gerenciado durante a abertura e o fechamento.
+- A tecla Escape fecha o painel quando permitido.
+- O clique no overlay pode ser configurado.
+- O conteúdo principal pode ter rolagem independente.
+- As animações de entrada e saída são definidas no CSS do componente.
+
+O Drawer não substitui o Sidebar permanente da aplicação.
+São componentes com responsabilidades distintas.
+
+---
+
+## Teclado e gerenciamento de foco
+
+| Interação | Dialog | Drawer |
+| --- | --- | --- |
+| Tab / Shift+Tab | Navegação entre elementos focáveis | Navegação entre elementos focáveis |
+| Escape | Fecha quando permitido | Fecha quando permitido |
+| Clique fora | Configurável | Configurável |
+| Foco ao abrir | Gerenciado pelo Radix | Gerenciado pelo Radix |
+| Foco ao fechar | Retorna à origem normalmente | Retorna à origem normalmente |
+| Restrição de foco | Modal | Modal |
+
+O comportamento pode ser ajustado pela aplicação quando houver
+necessidades específicas, preservando os requisitos de acessibilidade.
+
+---
+
+## Boas práticas
+
+- Utilize títulos claros e objetivos.
+- Evite abrir múltiplos overlays simultaneamente sem necessidade.
+- Mantenha ações principais facilmente identificáveis.
+- Prefira Dialog para decisões curtas e Drawer para conteúdo mais extenso.
+- Não utilize overlays como substitutos indiscriminados de páginas.
+- Preserve a navegação por teclado e o gerenciamento de foco.
+- Garanta que o usuário consiga identificar como fechar o overlay.
+
+As páginas individuais de Dialog e Drawer apresentam exemplos
+adicionais de tamanhos, formulários, controle externo e rolagem.
