@@ -30,3 +30,4 @@ export * from './feedback/Alert';
 export * from './feedback/Toast';
 export * from './overlays/Dialog';
 export * from './overlays/Drawer';
+export * from './feedback/Skeleton';
