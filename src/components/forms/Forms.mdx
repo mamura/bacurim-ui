@@ -1,0 +1,769 @@
+
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+
+import * as InputStories from './Input/Input.stories';
+import * as TextareaStories from './Textarea/Textarea.stories';
+import * as SelectStories from './Select/Select.stories';
+import * as CheckboxStories from './Checkbox/Checkbox.stories';
+import * as RadioGroupStories from './RadioGroup/RadioGroup.stories';
+import * as FormFieldStories from './FormField/FormField.stories';
+import * as MoneyInputStories from './MoneyInput/MoneyInput.stories';
+import * as DateInputStories from './DateInput/DateInput.stories';
+
+<Meta title="Components/Forms/Overview" />
+
+# Form Components
+
+Form components provide a consistent foundation for collecting, presenting, and validating user input in applications built with Bacurim UI.
+
+They share the same design foundations for colors, typography, spacing, radius, and interaction states.
+
+The library provides reusable controls and composition primitives without introducing application-specific business rules, form submission logic, or validation frameworks.
+
+## Overview
+
+The form system consists of eight complementary components.
+
+| Component | Responsibility |
+| --- | --- |
+| Input | Collects single-line text and native input values. |
+| Textarea | Collects multiline text. |
+| Select | Allows selection from a predefined list of options. |
+| Checkbox | Represents independent boolean or indeterminate selections. |
+| Radio Group | Allows selection of one option from a group. |
+| Form Field | Composes labels, controls, descriptions, and validation messages. |
+| Money Input | Collects monetary values with currency-aware formatting. |
+| Date Input | Collects dates through manual entry or calendar selection. |
+
+Each component has its own Storybook stories covering its available variants, states, and interaction patterns.
+
+## Input
+
+Input provides a reusable single-line control supporting native HTML input types, sizes, radius variants, optional icons, and validation states.
+
+### Default
+
+<Canvas of={InputStories.Default} />
+
+### Sizes and icons
+
+<Canvas of={InputStories.Sizes} />
+
+<Canvas of={InputStories.WithIcons} />
+
+### States and validation
+
+<Canvas of={InputStories.States} />
+
+<Canvas of={InputStories.Validation} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| size | `'sm' \| 'md' \| 'lg'` | Controls the input height and typography. |
+| radius | `'sm' \| 'md' \| 'lg' \| 'full'` | Controls corner radius. |
+| startIcon | `ReactNode` | Optional leading icon. |
+| endIcon | `ReactNode` | Optional trailing icon. |
+| invalid | `boolean` | Applies the invalid visual state. |
+| disabled | `boolean` | Prevents interaction. |
+| readOnly | `boolean` | Prevents editing while preserving the value. |
+| type | `string` | Native HTML input type. |
+
+Input also supports applicable native input attributes.
+
+### Usage
+
+```tsx
+import { Input } from 'bacurim-ui';
+
+function Example() {
+  return (
+    <Input
+      type="email"
+      placeholder="name@example.com"
+      size="md"
+    />
+  );
+}
+```
+
+## Textarea
+
+Textarea provides multiline text entry with configurable dimensions and resize behavior.
+
+### Default
+
+<Canvas of={TextareaStories.Default} />
+
+### Resize options
+
+<Canvas of={TextareaStories.ResizeOptions} />
+
+### States and validation
+
+<Canvas of={TextareaStories.States} />
+
+<Canvas of={TextareaStories.Validation} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| size | `'sm' \| 'md' \| 'lg'` | Controls typography and spacing. |
+| radius | `'sm' \| 'md' \| 'lg' \| 'full'` | Controls corner radius. |
+| rows | `number` | Sets the initial visible number of lines. |
+| resize | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | Controls resizing. |
+| invalid | `boolean` | Applies the invalid visual state. |
+| disabled | `boolean` | Prevents interaction. |
+| readOnly | `boolean` | Prevents editing. |
+
+Textarea supports applicable native textarea attributes.
+
+### Usage
+
+```tsx
+import { Textarea } from 'bacurim-ui';
+
+function Example() {
+  return (
+    <Textarea
+      rows={4}
+      resize="vertical"
+      placeholder="Enter a description..."
+    />
+  );
+}
+```
+
+## Select
+
+Select provides an accessible selection control built from composable primitives.
+
+It supports grouped options, disabled items, controlled and uncontrolled values, and keyboard navigation.
+
+### Default
+
+<Canvas of={SelectStories.Default} />
+
+### Groups
+
+<Canvas of={SelectStories.Groups} />
+
+### Controlled selection
+
+<Canvas of={SelectStories.Controlled} />
+
+### Invalid state
+
+<Canvas of={SelectStories.Invalid} />
+
+### Composition
+
+The Select component is composed using:
+
+- `Select`: manages the selected value.
+- `SelectTrigger`: opens the available options.
+- `SelectValue`: displays the selected value or placeholder.
+- `SelectContent`: contains the selectable options.
+- `SelectItem`: represents an individual option.
+- `SelectGroup` and `SelectLabel`: organize related options.
+- `SelectSeparator`: separates groups of options.
+- `SelectScrollUpButton` and `SelectScrollDownButton`: support scrolling through long lists.
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| value | `string` | Controlled selected value. |
+| defaultValue | `string` | Initial uncontrolled value. |
+| onValueChange | `(value: string) => void` | Notifies selection changes. |
+| disabled | `boolean` | Prevents selection. |
+| size | `'sm' \| 'md' \| 'lg'` | Controls trigger dimensions. |
+| radius | `'sm' \| 'md' \| 'lg' \| 'full'` | Controls trigger radius. |
+| invalid | `boolean` | Applies invalid styling to the trigger. |
+
+Visual properties such as `size`, `radius`, and `invalid` are configured on `SelectTrigger`.
+
+### Usage
+
+```tsx
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from 'bacurim-ui';
+
+function Example() {
+  return (
+    <Select defaultValue="active">
+      <SelectTrigger>
+        <SelectValue placeholder="Select a status" />
+      </SelectTrigger>
+
+      <SelectContent>
+        <SelectItem value="active">Active</SelectItem>
+        <SelectItem value="inactive">Inactive</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+## Checkbox
+
+Checkbox represents independent selections and supports checked, unchecked, and indeterminate states.
+
+### States
+
+<Canvas of={CheckboxStories.States} />
+
+### Colors and sizes
+
+<Canvas of={CheckboxStories.Colors} />
+
+<Canvas of={CheckboxStories.Sizes} />
+
+### Indeterminate
+
+<Canvas of={CheckboxStories.Indeterminate} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| checked | `boolean \| 'indeterminate'` | Controlled checked state. |
+| defaultChecked | `boolean \| 'indeterminate'` | Initial uncontrolled state. |
+| onCheckedChange | `(checked: boolean \| 'indeterminate') => void` | Notifies state changes. |
+| size | `'sm' \| 'md' \| 'lg'` | Controls dimensions. |
+| color | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | Controls the active color. |
+| disabled | `boolean` | Prevents interaction. |
+
+### Usage
+
+```tsx
+import { Checkbox } from 'bacurim-ui';
+
+function Example() {
+  return (
+    <label className="flex items-center gap-2">
+      <Checkbox defaultChecked={false} />
+      <span>Enable notifications</span>
+    </label>
+  );
+}
+```
+
+Use a meaningful accessible label for each checkbox. When a checkbox represents a group selection, the indeterminate state can communicate that only some items are selected.
+
+## Radio Group
+
+Radio Group allows the user to select exactly one option from a predefined set.
+
+### Default
+
+<Canvas of={RadioGroupStories.Default} />
+
+### Horizontal orientation
+
+<Canvas of={RadioGroupStories.Horizontal} />
+
+### States
+
+<Canvas of={RadioGroupStories.States} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| value | `string` | Controlled selected value. |
+| defaultValue | `string` | Initial uncontrolled value. |
+| onValueChange | `(value: string) => void` | Notifies selection changes. |
+| orientation | `'horizontal' \| 'vertical'` | Controls group orientation. |
+| disabled | `boolean` | Disables the group. |
+| size | `'sm' \| 'md' \| 'lg'` | Controls individual item dimensions. |
+| color | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | Controls the selected indicator color. |
+
+The `size` and `color` properties apply to `RadioGroupItem`.
+
+### Usage
+
+```tsx
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from 'bacurim-ui';
+
+function Example() {
+  return (
+    <RadioGroup
+      defaultValue="monthly"
+      aria-label="Billing frequency"
+    >
+      <label className="flex items-center gap-2">
+        <RadioGroupItem value="monthly" />
+        <span>Monthly</span>
+      </label>
+
+      <label className="flex items-center gap-2">
+        <RadioGroupItem value="yearly" />
+        <span>Yearly</span>
+      </label>
+    </RadioGroup>
+  );
+}
+```
+
+Radio Group supports keyboard navigation between options. Use a group label that communicates what the options represent.
+
+## Form Field
+
+Form Field establishes a consistent composition pattern for labels, controls, helper descriptions, and validation messages.
+
+It manages accessibility relationships between the field and its associated elements.
+
+### Default
+
+<Canvas of={FormFieldStories.Default} />
+
+### Required field
+
+<Canvas of={FormFieldStories.Required} />
+
+### Validation
+
+<Canvas of={FormFieldStories.Invalid} />
+
+### Composition
+
+```text
+FormField
+├── FormFieldLabel
+├── FormFieldControl
+│   └── Input / Textarea / Select / other control
+├── FormFieldDescription
+└── FormFieldError
+```
+
+### Components
+
+| Component | Responsibility |
+| --- | --- |
+| FormField | Provides field context and validation state. |
+| FormFieldLabel | Displays the associated label. |
+| FormFieldControl | Connects the control to the field context. |
+| FormFieldDescription | Provides optional supporting information. |
+| FormFieldError | Displays validation feedback. |
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| required | `boolean` | Identifies a required field. |
+| invalid | `boolean` | Indicates that the field has a validation error. |
+| children | `ReactNode` | Composed field elements. |
+
+### Usage
+
+```tsx
+import {
+  FormField,
+  FormFieldLabel,
+  FormFieldControl,
+  FormFieldDescription,
+  FormFieldError,
+  Input,
+} from 'bacurim-ui';
+
+function Example() {
+  const invalid = true;
+
+  return (
+    <FormField required invalid={invalid}>
+      <FormFieldLabel>Email address</FormFieldLabel>
+
+      <FormFieldControl>
+        <Input type="email" invalid={invalid} />
+      </FormFieldControl>
+
+      <FormFieldDescription>
+        We will use this address to contact you.
+      </FormFieldDescription>
+
+      <FormFieldError>
+        Enter a valid email address.
+      </FormFieldError>
+    </FormField>
+  );
+}
+```
+
+Form Field does not execute validation rules or manage form submission. The consuming application determines whether a value is valid and supplies the corresponding state.
+
+When a control exposes its own `invalid` property, apply it alongside the Form Field state to ensure consistent visual feedback.
+
+## Money Input
+
+Money Input provides currency-aware formatting while exposing a numeric value independently of its visual representation.
+
+It supports cent-based entry, configurable currencies, optional negative values, and controlled or uncontrolled usage.
+
+### Default
+
+<Canvas of={MoneyInputStories.Default} />
+
+### Currencies
+
+<Canvas of={MoneyInputStories.Currencies} />
+
+### Negative values
+
+<Canvas of={MoneyInputStories.Negative} />
+
+### Controlled value
+
+<Canvas of={MoneyInputStories.Controlled} />
+
+### Validation with Form Field
+
+<Canvas of={MoneyInputStories.InvalidFormField} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| value | `number \| null` | Controlled monetary value. |
+| defaultValue | `number \| null` | Initial uncontrolled value. |
+| onValueChange | `(value: number \| null) => void` | Returns the numeric value. |
+| currency | `string` | ISO currency code, defaulting to `BRL`. |
+| locale | `string` | Formatting locale, defaulting to `pt-BR`. |
+| allowNegative | `boolean` | Enables negative values. |
+| size | `'sm' \| 'md' \| 'lg'` | Controls dimensions. |
+| invalid | `boolean` | Applies invalid styling. |
+| disabled | `boolean` | Prevents editing. |
+| readOnly | `boolean` | Prevents editing while retaining the value. |
+
+### Usage
+
+```tsx
+import { useState } from 'react';
+import { MoneyInput } from 'bacurim-ui';
+
+function Example() {
+  const [amount, setAmount] = useState<number | null>(null);
+
+  return (
+    <MoneyInput
+      value={amount}
+      onValueChange={setAmount}
+      currency="BRL"
+      locale="pt-BR"
+    />
+  );
+}
+```
+
+### Value representation
+
+For Brazilian reais, entering the digits `123456` produces the formatted representation `R$ 1.234,56`.
+
+The consuming application receives the numeric value `1234.56`.
+
+An empty field is represented by `null`, which is distinct from zero.
+
+The number of fractional digits is determined by the configured currency.
+
+Money Input does not perform currency conversion, exchange-rate calculations, or domain-specific financial validation.
+
+## Date Input
+
+Date Input supports manual entry and calendar-based selection.
+
+It separates the displayed date format from the ISO date value received by the application.
+
+### Default
+
+<Canvas of={DateInputStories.Default} />
+
+### Formats
+
+<Canvas of={DateInputStories.Formats} />
+
+### Date limits
+
+<Canvas of={DateInputStories.WithLimits} />
+
+### Controlled value
+
+<Canvas of={DateInputStories.Controlled} />
+
+### Validation with Form Field
+
+<Canvas of={DateInputStories.InvalidFormField} />
+
+### API
+
+| Property | Type | Purpose |
+| --- | --- | --- |
+| value | `string \| null` | Controlled ISO date value. |
+| defaultValue | `string \| null` | Initial uncontrolled ISO date. |
+| onValueChange | `(value: string \| null) => void` | Returns the selected ISO date. |
+| format | `'dd/MM/yyyy' \| 'MM/dd/yyyy' \| 'yyyy-MM-dd'` | Controls visual presentation. |
+| minDate | `string` | Minimum selectable ISO date. |
+| maxDate | `string` | Maximum selectable ISO date. |
+| size | `'sm' \| 'md' \| 'lg'` | Controls dimensions. |
+| invalid | `boolean` | Applies invalid styling. |
+| disabled | `boolean` | Prevents interaction. |
+| readOnly | `boolean` | Prevents editing and selection. |
+
+### Usage
+
+```tsx
+import { useState } from 'react';
+import { DateInput } from 'bacurim-ui';
+
+function Example() {
+  const [date, setDate] = useState<string | null>(null);
+
+  return (
+    <DateInput
+      value={date}
+      onValueChange={setDate}
+      format="dd/MM/yyyy"
+      minDate="2026-01-01"
+      maxDate="2026-12-31"
+    />
+  );
+}
+```
+
+### Value representation
+
+Date Input returns date-only strings using the ISO format `YYYY-MM-DD`.
+
+For example:
+
+| Representation | Value |
+| --- | --- |
+| Application value | `2026-10-28` |
+| Brazilian display | `28/10/2026` |
+| American display | `10/28/2026` |
+
+A date-only ISO value does not contain a time or timezone offset.
+
+Invalid or out-of-range dates are not committed through `onValueChange`.
+
+Date Input does not implement date ranges, time selection, holidays, or application-specific calendar rules.
+
+## Form Composition
+
+A complete form combines multiple controls using consistent labels, descriptions, and validation states.
+
+The Form Field component provides the recommended composition pattern.
+
+### Complete example
+
+<Canvas of={FormFieldStories.FormExample} />
+
+### Other compositions
+
+#### Textarea
+
+<Canvas of={FormFieldStories.WithTextarea} />
+
+#### Select
+
+<Canvas of={FormFieldStories.WithSelect} />
+
+#### Checkbox
+
+<Canvas of={FormFieldStories.WithCheckbox} />
+
+#### Radio Group
+
+<Canvas of={FormFieldStories.WithRadioGroup} />
+
+#### Money Input
+
+<Canvas of={MoneyInputStories.WithFormField} />
+
+#### Date Input
+
+<Canvas of={DateInputStories.WithFormField} />
+
+## Interaction States
+
+Form controls should expose consistent visual and behavioral states.
+
+| State | Expected behavior |
+| --- | --- |
+| Default | The control is available for interaction. |
+| Hover | The control provides visual feedback where applicable. |
+| Focus | The active control receives a visible focus treatment. |
+| Disabled | The control cannot be edited or activated. |
+| Readonly | The existing value remains available without permitting edits. |
+| Invalid | The control communicates a validation error. |
+
+Not every state applies to every component. For example, readonly behavior is relevant to editable text and value controls, while selection controls may expose disabled behavior instead.
+
+### Focus
+
+Bacurim UI form controls use the shared primary border token for focus styling.
+
+Avoid introducing additional focus rings or outlines that conflict with the established component appearance.
+
+### Disabled and readonly
+
+Disabled and readonly are different concepts.
+
+A disabled control cannot be interacted with and is generally excluded from native form submission.
+
+A readonly control preserves its value while preventing changes, where supported by the component.
+
+## Validation Guidelines
+
+Validation rules belong to the consuming application.
+
+Form components provide the presentation layer required to communicate validation results.
+
+A recommended validation flow is:
+
+1. Collect the current control value.
+2. Evaluate the applicable validation rules.
+3. Update the field's invalid state.
+4. Display a meaningful error message.
+5. Allow the user to correct the value.
+
+### Error messages
+
+Use concise messages that explain what needs to be corrected.
+
+Prefer:
+
+- "Enter a valid email address."
+- "This field is required."
+- "Select a date within the allowed range."
+
+Avoid messages that only say "Invalid value" without explaining the problem.
+
+Error feedback should not rely exclusively on color.
+
+## Accessibility
+
+Accessibility is a shared responsibility between the component library and the consuming application.
+
+### Labels
+
+Every form control must have an accessible name.
+
+Use `FormFieldLabel`, a properly associated native label, or an appropriate ARIA label.
+
+Do not rely on placeholder text as the only label.
+
+### Descriptions and errors
+
+Use `FormFieldDescription` to provide supporting information.
+
+Use `FormFieldError` for validation feedback.
+
+Associated descriptions and errors should be available to assistive technologies through the relationships established by Form Field.
+
+### Keyboard navigation
+
+Controls must remain usable without a pointing device.
+
+- Text inputs and textareas support native keyboard editing.
+- Select supports keyboard navigation and selection.
+- Checkbox supports keyboard activation.
+- Radio Group supports navigation between options.
+- Money Input supports keyboard-based monetary entry.
+- Date Input supports manual entry and keyboard interaction with the calendar.
+
+### Validation semantics
+
+Use `aria-invalid` to identify invalid controls.
+
+Provide meaningful error text and ensure that the relevant control is associated with its validation message.
+
+### Focus management
+
+Focus should remain predictable when opening and closing overlays such as Select and Date Input.
+
+Keyboard users must be able to navigate interactive elements and return to the surrounding form.
+
+## Controlled and Uncontrolled Components
+
+Form components support controlled or uncontrolled usage according to their respective APIs.
+
+### Controlled
+
+The consuming application owns the value and updates it in response to change callbacks.
+
+```tsx
+const [value, setValue] = useState('');
+
+<Input
+  value={value}
+  onChange={(event) => setValue(event.target.value)}
+/>
+```
+
+### Uncontrolled
+
+The component or underlying native element manages its current value.
+
+```tsx
+<Input defaultValue="Example" />
+```
+
+Use controlled components when the application needs to coordinate values, validation, conditional fields, or submission behavior.
+
+## Design Foundations
+
+All form components use the shared Bacurim UI foundations.
+
+### Colors
+
+Use semantic tokens such as:
+
+- `primary` for active interaction states.
+- `error` for validation feedback.
+- `surface` for control backgrounds.
+- `text-primary` for entered values.
+- `text-secondary` for supporting content.
+- `border` for default boundaries.
+
+### Typography
+
+Form controls use the shared body typography system based on Inter.
+
+Labels, descriptions, and error messages should maintain a clear visual hierarchy.
+
+### Spacing and radius
+
+Use the established spacing and radius scales instead of introducing arbitrary values.
+
+Equivalent control sizes should remain visually consistent when placed in the same form.
+
+## Scope and Responsibilities
+
+The form system is responsible for:
+
+- Presenting reusable input controls.
+- Providing consistent interaction states.
+- Supporting accessible form composition.
+- Exposing typed values and change callbacks.
+- Communicating validation states.
+
+The consuming application remains responsible for:
+
+- Business validation rules.
+- Form submission.
+- API integration.
+- Persistence.
+- Application-specific workflows.
+- Domain-specific field requirements.
+
+This separation keeps Bacurim UI reusable across different applications without coupling the component library to a particular product domain.

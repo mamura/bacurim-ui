@@ -1,0 +1,111 @@
+@theme {
+  /** Font families */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /** Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /** Font sizes */
+  --text-display: clamp(2.5rem, 5vw, 3.25rem);
+
+  --text-heading-xl: clamp(2rem, 4vw, 2.625rem);
+  --text-heading-lg: 2rem;
+  --text-heading-md: 1.5rem;
+  --text-heading-sm: 1.25rem;
+
+  --text-body-lg: 1.25rem;
+  --text-body-md: 1rem;
+  --text-body-sm: 0.875rem;
+
+  --text-caption: 0.75rem;
+  --text-lead: clamp(1.125rem, 1.5vw, 1.25rem);
+}
+
+/* Display */
+
+@utility display {
+  font-family: var(--font-heading);
+  font-size: var(--text-display);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+/* Headings */
+
+@utility heading-xl {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+@utility heading-lg {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+@utility heading-md {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+@utility heading-sm {
+  font-family: var(--font-heading);
+  font-size: var(--text-heading-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+}
+
+/* Body */
+
+@utility body-lg {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+}
+
+@utility body-md {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.75;
+}
+
+@utility body-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+}
+
+/* Caption */
+
+@utility caption {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+/* Lead */
+
+@utility text-lead {
+  font-family: var(--font-body);
+  font-size: var(--text-lead);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+  letter-spacing: 0;
+}

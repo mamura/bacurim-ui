@@ -180,7 +180,7 @@ The `@` alias points to the `src` directory.
 Example:
 
 ```ts
-import { something } from '@/utilities'
+import { something } from "@/utilities";
 ```
 
 More information about internal imports and public exports is available in:
