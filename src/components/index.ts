@@ -26,3 +26,4 @@ export * from './forms/RadioGroup';
 export * from './forms/FormField';
 export * from './forms/MoneyInput';
 export * from './forms/DateInput';
+export * from './feedback/Alert';
