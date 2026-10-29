@@ -33,3 +33,4 @@ export * from './overlays/Drawer';
 export * from './feedback/Skeleton';
 export * from './feedback/EmptyState';
 export * from './feedback/Progress';
+export * from './data-display/Table';
