@@ -26,6 +26,7 @@ export interface InputProps
   type?: InputType;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  endAdornment?: ReactNode;
   invalid?: boolean;
 }
 
@@ -56,6 +57,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       type = 'text',
       startIcon,
       endIcon,
+      endAdornment,
       invalid = false,
       disabled,
       readOnly,
@@ -74,39 +76,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         data-readonly={readOnly ? 'true' : undefined}
         data-invalid={isInvalid ? 'true' : undefined}
         className={cn(
-          // Layout
           'group relative flex w-full items-center',
-
-          // Aparência
           'border border-border bg-surface text-text-primary',
           'transition-colors duration-150',
-
-          // Hover
           'hover:border-text-secondary',
-
-          // Focus: somente a borda, sem ring ou outline
           'focus-within:border-primary',
-
-          // Estado inválido
           'data-[invalid=true]:border-error',
           'data-[invalid=true]:focus-within:border-error',
-
-          // Estado desabilitado
           'data-[disabled=true]:cursor-not-allowed',
           'data-[disabled=true]:bg-background',
           'data-[disabled=true]:opacity-50',
           'data-[disabled=true]:hover:border-border',
-
-          // Somente leitura
           'data-[readonly=true]:bg-background',
           'data-[readonly=true]:hover:border-border',
-
-          // Tamanho, radius e ícones
           sizeClasses[size],
           radiusClasses[radius],
           iconSizeClasses[size],
-
-          // Personalização
           className,
         )}
       >
@@ -147,6 +132,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
           >
             {endIcon}
+          </span>
+        )}
+
+        {endAdornment && (
+          <span className="ml-3 flex shrink-0 items-center justify-center">
+            {endAdornment}
           </span>
         )}
       </div>
