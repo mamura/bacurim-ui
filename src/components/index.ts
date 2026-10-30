@@ -36,3 +36,4 @@ export * from './feedback/Progress';
 export * from './data-display/Table';
 export * from './navigation/Pagination';
 export * from './forms/SearchInput';
+export * from './data-display/FilterBar';
