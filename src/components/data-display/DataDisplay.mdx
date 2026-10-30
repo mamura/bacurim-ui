@@ -1,0 +1,451 @@
+
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+
+import * as TableStories from './Table/Table.stories';
+import * as SortingStories from './Table/TableSorting.stories';
+import * as PaginationStories from '../navigation/Pagination/Pagination.stories';
+import * as SearchStories from '../forms/SearchInput/SearchInput.stories';
+import * as FilterStories from './FilterBar/FilterBar.stories';
+import * as FormattedStories from './FormattedValue/FormattedValue.stories';
+import * as InteractionStories from './DataInteraction.stories';
+import * as SkeletonStories from '../feedback/Skeleton/Skeleton.stories';
+import * as EmptyStories from '../feedback/EmptyState/EmptyState.stories';
+
+<Meta title="Components/Data Display/Overview" />
+
+# Data Display & Interaction
+
+Os componentes de apresentação e interação com dados do Bacurim UI
+fornecem padrões reutilizáveis para exibir, organizar e explorar
+conjuntos de informações.
+
+A biblioteca é responsável pela apresentação e pelos controles
+de interface. As aplicações consumidoras continuam responsáveis
+pelos dados, filtros, ordenação, paginação e integrações.
+
+## Table
+
+O componente `Table` utiliza elementos HTML semânticos e
+oferece composição por meio de componentes especializados.
+
+```tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Nome</TableHead>
+      <TableHead align="right">Valor</TableHead>
+    </TableRow>
+  </TableHeader>
+
+  <TableBody>
+    <TableRow>
+      <TableCell>Exemplo</TableCell>
+      <TableCell align="right">R$ 1.250,00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+### API
+
+| Componente | Responsabilidade |
+| --- | --- |
+| `Table` | Container semântico da tabela |
+| `TableHeader` | Agrupamento do cabeçalho |
+| `TableBody` | Agrupamento das linhas de dados |
+| `TableFooter` | Agrupamento do rodapé |
+| `TableRow` | Linha de cabeçalho ou dados |
+| `TableHead` | Célula de cabeçalho |
+| `TableCell` | Célula de dados |
+| `TableCaption` | Descrição da tabela |
+
+O componente `Table` também permite configurar densidade,
+bordas, linhas alternadas e comportamento visual de hover.
+
+### Tabela padrão
+
+<Canvas of={TableStories.Default} />
+
+### Densidade
+
+<Canvas of={TableStories.Density} />
+
+### Linhas alternadas
+
+<Canvas of={TableStories.Striped} />
+
+### Seleção
+
+<Canvas of={TableStories.Selectable} />
+
+## Table Sorting
+
+A ordenação é representada pelo componente `TableSortHead`.
+
+Ele comunica a intenção de ordenar uma coluna, mas não altera
+diretamente os dados.
+
+A aplicação controla a direção da ordenação e reorganiza
+os registros conforme necessário.
+
+```tsx
+<TableSortHead
+  sortLabel="Valor"
+  sortDirection={sortDirection}
+  onSortChange={setSortDirection}
+>
+  Valor
+</TableSortHead>
+```
+
+As direções possíveis são:
+
+- `asc`: ordem ascendente
+- `desc`: ordem descendente
+- `null`: nenhuma ordenação ativa
+
+O cabeçalho utiliza `aria-sort` para comunicar a direção
+a tecnologias assistivas.
+
+### Ordenação interativa
+
+<Canvas of={SortingStories.ExternalControl} />
+
+### Ordenação ascendente
+
+<Canvas of={SortingStories.Ascending} />
+
+### Ordenação descendente
+
+<Canvas of={SortingStories.Descending} />
+
+## Pagination
+
+O componente `Pagination` representa a navegação entre páginas.
+
+Ele recebe a página atual, a quantidade total de páginas
+e uma função para comunicar alterações.
+
+```tsx
+<Pagination
+  page={page}
+  totalPages={totalPages}
+  onPageChange={setPage}
+/>
+```
+
+### API principal
+
+| Propriedade | Descrição |
+| --- | --- |
+| `page` | Página atual |
+| `totalPages` | Quantidade total de páginas |
+| `onPageChange` | Callback de alteração |
+| `siblingCount` | Páginas próximas à atual |
+| `boundaryCount` | Páginas nas extremidades |
+| `showFirstLast` | Exibe primeira e última página |
+| `showPreviousNext` | Exibe anterior e próxima |
+| `size` | Tamanho dos controles |
+| `variant` | Variante visual |
+| `disabled` | Desabilita a navegação |
+
+A paginação não carrega dados nem modifica a coleção original.
+
+### Paginação padrão
+
+<Canvas of={PaginationStories.Default} />
+
+### Muitas páginas
+
+<Canvas of={PaginationStories.ManyPages} />
+
+### Estados desabilitados
+
+<Canvas of={PaginationStories.Disabled} />
+
+## Search Input
+
+O `SearchInput` especializa o componente `Input` para
+entrada de termos de busca.
+
+Oferece identificação visual, ação de limpeza e suporte
+a valores controlados e não controlados.
+
+```tsx
+const [search, setSearch] = useState('');
+
+<SearchInput
+  value={search}
+  onChange={(event) => setSearch(event.target.value)}
+  onClear={() => setSearch('')}
+  placeholder="Buscar registros..."
+  aria-label="Buscar registros"
+/>
+```
+
+O componente não realiza filtragem, debounce ou requisições.
+
+### Busca controlada
+
+<Canvas of={SearchStories.Controlled} />
+
+### Busca com listagem
+
+<Canvas of={SearchStories.WithFilteredList} />
+
+### Estado desabilitado
+
+<Canvas of={SearchStories.Disabled} />
+
+## Filter Bar
+
+A `FilterBar` organiza controles de busca e filtros em um
+container responsivo.
+
+O componente não conhece os valores ou as regras dos filtros.
+
+```tsx
+<FilterBar
+  activeFiltersCount={activeFiltersCount}
+  onClear={clearFilters}
+>
+  <FilterBarContent columns={2}>
+    <SearchInput
+      value={search}
+      onChange={(event) => setSearch(event.target.value)}
+      onClear={() => setSearch('')}
+    />
+
+    <Select />
+  </FilterBarContent>
+
+  <FilterBarActions>
+    <Button>Exportar</Button>
+  </FilterBarActions>
+</FilterBar>
+```
+
+### API principal
+
+| Propriedade | Descrição |
+| --- | --- |
+| `title` | Título da área de filtros |
+| `activeFiltersCount` | Quantidade de filtros ativos |
+| `onClear` | Ação de limpeza |
+| `clearLabel` | Texto do botão de limpeza |
+| `showClearButton` | Controla a exibição da limpeza |
+| `showActiveCount` | Controla o contador |
+
+`FilterBarContent` permite configurar a quantidade de
+colunas responsivas por meio da propriedade `columns`.
+
+`FilterBarActions` organiza ações auxiliares e permite
+configurar seu alinhamento.
+
+### Filtros ativos
+
+<Canvas of={FilterStories.WithActiveFilters} />
+
+### Ações auxiliares
+
+<Canvas of={FilterStories.WithActions} />
+
+### Layout responsivo
+
+<Canvas of={FilterStories.Responsive} />
+
+## Data Value Formatters
+
+Os formatadores padronizam a apresentação de números,
+valores monetários, percentuais e datas.
+
+Eles utilizam as APIs nativas `Intl` do JavaScript.
+
+```ts
+formatNumber(1234567.89);
+// "1.234.567,89"
+
+formatCurrency(12345.67);
+// "R$ 12.345,67"
+
+formatPercentage(0.1575);
+// "15,75%"
+
+formatDate('2026-10-30');
+// "30/10/2026"
+```
+
+Os utilitários preservam o valor original e retornam
+uma representação textual.
+
+O locale padrão é `pt-BR`, e a moeda padrão é `BRL`.
+
+Valores nulos, ausentes ou inválidos retornam `—`,
+salvo quando um fallback personalizado é informado.
+
+### FormattedValue
+
+O componente `FormattedValue` disponibiliza esses
+formatadores diretamente no JSX.
+
+```tsx
+<FormattedValue type="number" value={1234.56} />
+
+<FormattedValue type="currency" value={12500} />
+
+<FormattedValue type="percentage" value={0.125} />
+
+<FormattedValue type="date" value="2026-10-30" />
+```
+
+A formatação de percentuais segue a convenção nativa
+do `Intl.NumberFormat`: `0.15` representa `15%`.
+
+A configuração de moeda altera apenas a apresentação.
+Não ocorre conversão cambial.
+
+### Números
+
+<Canvas of={FormattedStories.Numbers} />
+
+### Moedas
+
+<Canvas of={FormattedStories.Currencies} />
+
+### Percentuais
+
+<Canvas of={FormattedStories.Percentages} />
+
+### Datas
+
+<Canvas of={FormattedStories.Dates} />
+
+### Valores ausentes
+
+<Canvas of={FormattedStories.MissingValues} />
+
+## Composição integrada
+
+Os componentes podem ser combinados para criar interfaces
+de exploração de dados.
+
+O exemplo a seguir demonstra:
+
+- Busca controlada
+- Filtro por status
+- Contador de filtros ativos
+- Limpeza de filtros
+- Ordenação de coluna
+- Formatação de valores
+- Paginação controlada
+- Estados de carregamento e ausência de resultados
+
+Todos os dados são fictícios e mantidos localmente.
+
+### Exemplo completo
+
+<Canvas of={InteractionStories.CompleteExample} />
+
+### Filtros ativos
+
+<Canvas of={InteractionStories.WithActiveFilters} />
+
+## Estados de interface
+
+### Carregamento
+
+Durante o carregamento, a aplicação pode utilizar
+`Skeleton` para representar visualmente o conteúdo esperado.
+
+<Canvas of={InteractionStories.Loading} />
+
+O componente Skeleton também oferece diferentes
+formas e animações.
+
+<Canvas of={SkeletonStories.Default} />
+
+### Ausência de dados
+
+Quando não existem registros, a interface deve comunicar
+claramente a ausência de resultados.
+
+O componente `EmptyState` oferece uma composição
+reutilizável para esse cenário.
+
+<Canvas of={EmptyStories.Default} />
+
+### Busca sem resultados
+
+<Canvas of={InteractionStories.EmptyResults} />
+
+## Acessibilidade
+
+### Tabelas
+
+Utilize elementos semânticos de tabela para preservar
+a relação entre cabeçalhos, linhas e células.
+
+Quando necessário, forneça uma descrição por meio
+de `TableCaption`.
+
+### Ordenação
+
+Os controles de ordenação devem ser operáveis por teclado.
+
+A coluna ordenada deve comunicar seu estado através
+de `aria-sort`.
+
+### Paginação
+
+Os controles devem possuir nomes acessíveis.
+
+A página atual deve ser identificada por
+`aria-current="page"`.
+
+Controles indisponíveis devem ser desabilitados.
+
+### Busca e filtros
+
+Os campos devem possuir labels visíveis ou nomes
+acessíveis equivalentes.
+
+A ação de limpeza deve possuir um nome acessível
+e ser operável por teclado.
+
+A aplicação deve manter o foco de forma previsível
+após interações.
+
+### Estados de carregamento
+
+A interface deve comunicar o carregamento por texto
+ou atributos acessíveis.
+
+Elementos puramente decorativos não devem produzir
+anúncios desnecessários.
+
+### Ausência de resultados
+
+A ausência de dados deve ser comunicada por texto,
+não apenas por ícones ou elementos visuais.
+
+## Responsabilidades
+
+Os componentes do Bacurim UI são responsáveis por:
+
+- Apresentação visual
+- Composição de interface
+- Estados visuais
+- Interações acessíveis
+- Comunicação de eventos
+
+As aplicações consumidoras são responsáveis por:
+
+- Regras de filtragem
+- Ordenação dos dados
+- Cálculo da paginação
+- Carregamento e persistência
+- Integrações com APIs
+- Regras específicas de negócio
+
+Essa separação permite reutilizar os mesmos componentes
+em diferentes produtos e contextos.
