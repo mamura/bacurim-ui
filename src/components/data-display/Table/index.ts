@@ -24,3 +24,13 @@ export type {
   TableCellProps,
   TableCaptionProps,
 } from './Table';
+
+export {
+  TableSortHead,
+  getNextSortDirection,
+} from './TableSortHead';
+
+export type {
+  TableSortHeadProps,
+  TableSortDirection,
+} from './TableSortHead';
